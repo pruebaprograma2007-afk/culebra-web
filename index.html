@@ -33,8 +33,9 @@
             <div id="overlay" class="overlay">
                 <div id="start-screen" class="screen">
                     <h2>¿LISTO?</h2>
-                    <p>Presiona para comenzar</p>
-                    <div class="controls-hint">
+                    <p class="desktop-only">Presiona cualquier tecla para comenzar</p>
+                    <button id="play-btn" class="mobile-only">JUGAR AHORA</button>
+                    <div class="controls-hint desktop-only">
                         <span>WASD</span> / <span>↑←↓→</span>
                     </div>
                 </div>
@@ -49,8 +50,10 @@
 
         <!-- Mobile Controls -->
         <div class="mobile-controls">
-            <button class="ctrl-btn up" id="ctrl-up">↑</button>
-            <div class="middle-row">
+            <div class="control-row">
+                <button class="ctrl-btn up" id="ctrl-up">↑</button>
+            </div>
+            <div class="control-row">
                 <button class="ctrl-btn left" id="ctrl-left">←</button>
                 <button class="ctrl-btn down" id="ctrl-down">↓</button>
                 <button class="ctrl-btn right" id="ctrl-right">→</button>

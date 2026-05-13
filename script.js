@@ -65,6 +65,21 @@ document.addEventListener("keydown", (event) => {
 });
 
 // Escuchadores de controles móviles (Botones)
+const playBtn = document.getElementById("play-btn");
+
+playBtn.addEventListener("click", () => {
+    if (!gameStarted) {
+        setDirection("RIGHT"); // Dirección inicial por defecto
+    }
+});
+
+playBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    if (!gameStarted) {
+        setDirection("RIGHT");
+    }
+});
+
 document.getElementById("ctrl-up").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("UP"); });
 document.getElementById("ctrl-left").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("LEFT"); });
 document.getElementById("ctrl-down").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("DOWN"); });
