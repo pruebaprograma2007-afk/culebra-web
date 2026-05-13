@@ -96,6 +96,82 @@ h1 span {
 canvas {
     display: block;
     image-rendering: pixelated;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+/* Mobile Controls Styling */
+.mobile-controls {
+    display: none; /* Hidden by default on PC */
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    user-select: none;
+}
+
+.middle-row {
+    display: flex;
+    gap: 10px;
+}
+
+.ctrl-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.ctrl-btn:active {
+    background: var(--accent-primary);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: scale(0.9);
+}
+
+.ctrl-btn.up { order: 1; }
+.ctrl-btn.left { order: 1; }
+.ctrl-btn.down { order: 2; }
+.ctrl-btn.right { order: 3; }
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .game-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    .canvas-wrapper {
+        width: 100%;
+    }
+}
+
+@media (max-height: 700px) {
+    .game-container {
+        gap: 5px;
+    }
+    
+    .ctrl-btn {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .overlay {

@@ -39,30 +39,74 @@ function initGame() {
 
 // 2. Funciones Principales
 
-// Escuchador de teclado
-document.addEventListener("keydown", direction);
-
-function direction(event) {
-    let key = event.keyCode;
-    
+// Función para manejar la dirección (compartida entre teclado y móvil)
+function setDirection(newDir) {
     // Iniciar juego si no ha empezado
-    if (!gameStarted && (key >= 37 && key <= 40 || key == 87 || key == 65 || key == 83 || key == 68)) {
+    if (!gameStarted) {
         gameStarted = true;
         overlay.classList.add("hidden");
-        game = setInterval(draw, 120); // 120ms por frame
+        game = setInterval(draw, 120);
     }
 
-    // 3. Reglas de Movimiento y Control (Bloqueo de 180 grados)
-    if ((key == 37 || key == 65) && d != "RIGHT") {
-        d = "LEFT";
-    } else if ((key == 38 || key == 87) && d != "DOWN") {
-        d = "UP";
-    } else if ((key == 39 || key == 68) && d != "LEFT") {
-        d = "RIGHT";
-    } else if ((key == 40 || key == 83) && d != "UP") {
-        d = "DOWN";
-    }
+    // Bloqueo de 180 grados
+    if (newDir == "LEFT" && d != "RIGHT") d = "LEFT";
+    else if (newDir == "UP" && d != "DOWN") d = "UP";
+    else if (newDir == "RIGHT" && d != "LEFT") d = "RIGHT";
+    else if (newDir == "DOWN" && d != "UP") d = "DOWN";
 }
+
+// Escuchador de teclado
+document.addEventListener("keydown", (event) => {
+    let key = event.keyCode;
+    if (key == 37 || key == 65) setDirection("LEFT");
+    else if (key == 38 || key == 87) setDirection("UP");
+    else if (key == 39 || key == 68) setDirection("RIGHT");
+    else if (key == 40 || key == 83) setDirection("DOWN");
+});
+
+// Escuchadores de controles móviles (Botones)
+document.getElementById("ctrl-up").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("UP"); });
+document.getElementById("ctrl-left").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("LEFT"); });
+document.getElementById("ctrl-down").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("DOWN"); });
+document.getElementById("ctrl-right").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("RIGHT"); });
+
+// También añadir click para pruebas en desktop con modo móvil
+document.getElementById("ctrl-up").addEventListener("click", () => setDirection("UP"));
+document.getElementById("ctrl-left").addEventListener("click", () => setDirection("LEFT"));
+document.getElementById("ctrl-down").addEventListener("click", () => setDirection("DOWN"));
+document.getElementById("ctrl-right").addEventListener("click", () => setDirection("RIGHT"));
+
+// Detección de Swipes (Gesto de deslizar)
+let touchStartX = 0;
+let touchStartY = 0;
+
+canvas.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: false });
+
+canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault(); // Previene el scroll mientras juegas
+}, { passive: false });
+
+canvas.addEventListener("touchend", (e) => {
+    let touchEndX = e.changedTouches[0].screenX;
+    let touchEndY = e.changedTouches[0].screenY;
+    
+    let dx = touchEndX - touchStartX;
+    let dy = touchEndY - touchStartY;
+
+    // Solo si el deslizamiento es significativo
+    if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+        if (Math.abs(dx) > Math.abs(dy)) {
+            // Horizontal
+            setDirection(dx > 0 ? "RIGHT" : "LEFT");
+        } else {
+            // Vertical
+            setDirection(dy > 0 ? "DOWN" : "UP");
+        }
+    }
+});
 
 // 2. Función de colisión
 function collision(head, array) {
