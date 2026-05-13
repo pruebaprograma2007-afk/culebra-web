@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culebra Neon - Classic Game</title>
+    <meta name="description" content="Juego de la culebra clásico con estética moderna y controles precisos.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>CULEBRA<span>NEON</span></h1>
+            <div class="score-board">
+                <div class="score-item">
+                    <span class="label">PUNTOS</span>
+                    <span id="score" class="value">00</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">MÁXIMO</span>
+                    <span id="high-score" class="value">00</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="canvas-wrapper">
+            <canvas id="snakeGame" width="400" height="400"></canvas>
+            
+            <!-- Overlay for Game States -->
+            <div id="overlay" class="overlay">
+                <div id="start-screen" class="screen">
+                    <h2>¿LISTO?</h2>
+                    <p>Presiona cualquier flecha o WASD para comenzar</p>
+                    <div class="controls-hint">
+                        <span>WASD</span> / <span>↑←↓→</span>
+                    </div>
+                </div>
+
+                <div id="game-over-screen" class="screen hidden">
+                    <h2 class="danger">GAME OVER</h2>
+                    <p>Tu puntuación final: <span id="final-score">0</span></p>
+                    <button id="restart-btn">REINTENTAR</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Evita las paredes y no te muerdas a ti mismo.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
