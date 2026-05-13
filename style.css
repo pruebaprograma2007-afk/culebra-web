@@ -5,8 +5,10 @@
     --text-secondary: #94a3b8;
     --accent-primary: #10b981; /* Neon Green */
     --accent-secondary: #f43f5e; /* Neon Red */
+    --accent-blue: #00d2ff; /* Neon Blue */
     --accent-glow: rgba(16, 185, 129, 0.5);
     --danger-glow: rgba(244, 63, 94, 0.5);
+    --blue-glow: rgba(0, 210, 255, 0.6);
     --font-main: 'Outfit', sans-serif;
     --box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
@@ -88,8 +90,8 @@ h1 span {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: var(--box-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px var(--blue-glow), inset 0 0 10px var(--blue-glow);
+    border: 2px solid var(--accent-blue);
     background: #000;
 }
 

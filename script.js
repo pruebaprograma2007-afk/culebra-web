@@ -162,6 +162,11 @@ function draw() {
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Borde interior azul neon
+    ctx.strokeStyle = "#00d2ff";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
     // Dibujar cuadrícula sutil (opcional para estética)
     ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
     for(let i = 0; i < canvas.width; i += BOX) {
