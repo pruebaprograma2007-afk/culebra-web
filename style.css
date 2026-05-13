@@ -110,49 +110,81 @@ canvas {
     .mobile-only { display: block; }
 }
 
-/* Mobile Controls Styling (Diamond/Cross Layout) */
+/* Mobile Controls Styling (Premium PlayStation-style D-Pad) */
 .mobile-controls {
     display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-top: 20px;
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 20px auto;
     user-select: none;
 }
 
-.control-row {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 5px;
-}
-
-.spacer {
-    width: 70px; /* Same as button width to create a perfect cross */
-    height: 70px;
-}
-
 .ctrl-btn {
-    width: 70px;
-    height: 70px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 18px;
+    position: absolute;
+    width: 75px;
+    height: 85px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text-primary);
-    font-size: 2rem;
+    font-size: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.1s ease;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Formas con Clip-Path para estilo "Casa/Punta" */
+.ctrl-btn.up {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
+    padding-top: 15px;
+}
+
+.ctrl-btn.down {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%);
+    padding-bottom: 15px;
+}
+
+.ctrl-btn.left {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 85px;
+    height: 75px;
+    clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 40% 100%, 0% 50%);
+    padding-left: 15px;
+}
+
+.ctrl-btn.right {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 85px;
+    height: 75px;
+    clip-path: polygon(0% 0%, 60% 0%, 100% 50%, 60% 100%, 0% 100%);
+    padding-right: 15px;
 }
 
 .ctrl-btn:active {
     background: var(--accent-primary);
-    border-color: var(--accent-primary);
     box-shadow: 0 0 20px var(--accent-glow);
-    transform: scale(0.92);
+    filter: brightness(1.2);
+    transform: scale(0.95); /* Prevent jumpy transform on arrows */
 }
+
+/* Ajustes específicos para las flechas cuando están en transformación */
+.ctrl-btn.up:active { transform: translateX(-50%) scale(0.95); }
+.ctrl-btn.down:active { transform: translateX(-50%) scale(0.95); }
+.ctrl-btn.left:active { transform: translateY(-50%) scale(0.95); }
+.ctrl-btn.right:active { transform: translateY(-50%) scale(0.95); }
 
 #play-btn {
     margin-top: 10px;
