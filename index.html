@@ -48,12 +48,31 @@
             </div>
         </div>
 
-        <!-- Mobile Controls (Premium D-Pad) -->
+        <!-- Mobile Controls (Premium PlayStation-style D-Pad) -->
         <div class="mobile-controls">
-            <button class="ctrl-btn up" id="ctrl-up">↑</button>
-            <button class="ctrl-btn left" id="ctrl-left">←</button>
-            <button class="ctrl-btn down" id="ctrl-down">↓</button>
-            <button class="ctrl-btn right" id="ctrl-right">→</button>
+            <div class="dpad-housing">
+                <div class="dpad-center-pivot"></div>
+                <button class="ctrl-btn up" id="ctrl-up" aria-label="Arriba">
+                    <svg class="dpad-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </button>
+                <button class="ctrl-btn left" id="ctrl-left" aria-label="Izquierda">
+                    <svg class="dpad-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="ctrl-btn down" id="ctrl-down" aria-label="Abajo">
+                    <svg class="dpad-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <button class="ctrl-btn right" id="ctrl-right" aria-label="Derecha">
+                    <svg class="dpad-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <footer>

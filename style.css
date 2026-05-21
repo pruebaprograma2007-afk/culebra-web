@@ -115,78 +115,143 @@ canvas {
 /* Mobile Controls Styling (Premium PlayStation-style D-Pad) */
 .mobile-controls {
     display: none;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.dpad-housing {
     position: relative;
     width: 220px;
     height: 220px;
-    margin: 20px auto;
-    user-select: none;
+    border-radius: 50px; /* Rounded square housing like a real controller center */
+    background: radial-gradient(circle at center, #1e2e38 0%, #0d161d 100%);
+    border: 3px solid #1a2c3a;
+    box-shadow: 
+        inset 0 4px 10px rgba(255, 255, 255, 0.05),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.8),
+        0 10px 25px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(0, 210, 255, 0.15);
+}
+
+.dpad-center-pivot {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 85px;
+    left: 85px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #1b2832 0%, #0b1115 100%);
+    border: 2px solid #0f181f;
+    box-shadow: 
+        inset 0 3px 6px rgba(0, 0, 0, 0.9), 
+        0 2px 3px rgba(255, 255, 255, 0.05);
+    z-index: 5;
+    pointer-events: none;
 }
 
 .ctrl-btn {
     position: absolute;
-    width: 75px;
-    height: 85px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-primary);
-    font-size: 1.5rem;
+    background: linear-gradient(135deg, #2c4250 0%, #1a2a34 100%);
+    border: 2px solid rgba(0, 210, 255, 0.25);
+    color: #e2e8f0;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.1s ease;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    transition: all 0.08s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.1),
+        0 4px 6px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Formas con Clip-Path para estilo "Casa/Punta" */
+.dpad-arrow {
+    width: 24px;
+    height: 24px;
+    color: rgba(255, 255, 255, 0.7);
+    filter: drop-shadow(0 0 2px rgba(0, 210, 255, 0.3));
+    transition: transform 0.08s, color 0.08s, filter 0.08s;
+}
+
+/* Shapes and layout matching 220px housing */
 .ctrl-btn.up {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
+    width: 60px;
+    height: 82px;
+    top: 8px;
+    left: 80px;
+    clip-path: polygon(50% 0%, 100% 30%, 100% 100%, 0% 100%, 0% 30%);
     padding-top: 15px;
 }
 
 .ctrl-btn.down {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%);
+    width: 60px;
+    height: 82px;
+    bottom: 8px;
+    left: 80px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
     padding-bottom: 15px;
 }
 
 .ctrl-btn.left {
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 85px;
-    height: 75px;
-    clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 40% 100%, 0% 50%);
+    width: 82px;
+    height: 60px;
+    left: 8px;
+    top: 80px;
+    clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 30% 100%, 0% 50%);
     padding-left: 15px;
 }
 
 .ctrl-btn.right {
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 85px;
-    height: 75px;
-    clip-path: polygon(0% 0%, 60% 0%, 100% 50%, 60% 100%, 0% 100%);
+    width: 82px;
+    height: 60px;
+    right: 8px;
+    top: 80px;
+    clip-path: polygon(0% 0%, 70% 0%, 100% 50%, 70% 100%, 0% 100%);
     padding-right: 15px;
 }
 
-.ctrl-btn:active {
-    background: var(--accent-primary);
-    box-shadow: 0 0 20px var(--accent-glow);
-    filter: brightness(1.2);
-    transform: scale(0.95); /* Prevent jumpy transform on arrows */
+/* Active & Press animation (mechanical rocking effect) */
+.ctrl-btn.up:active, .ctrl-btn.up.active {
+    background: linear-gradient(135deg, #00d2ff 0%, #007799 100%);
+    border-color: #00d2ff;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.6);
+    transform: translateX(0) translateY(3px) scale(0.96);
+    z-index: 3;
 }
 
-/* Ajustes específicos para las flechas cuando están en transformación */
-.ctrl-btn.up:active { transform: translateX(-50%) scale(0.95); }
-.ctrl-btn.down:active { transform: translateX(-50%) scale(0.95); }
-.ctrl-btn.left:active { transform: translateY(-50%) scale(0.95); }
-.ctrl-btn.right:active { transform: translateY(-50%) scale(0.95); }
+.ctrl-btn.down:active, .ctrl-btn.down.active {
+    background: linear-gradient(135deg, #00d2ff 0%, #007799 100%);
+    border-color: #00d2ff;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.6);
+    transform: translateX(0) translateY(-3px) scale(0.96);
+    z-index: 3;
+}
+
+.ctrl-btn.left:active, .ctrl-btn.left.active {
+    background: linear-gradient(135deg, #00d2ff 0%, #007799 100%);
+    border-color: #00d2ff;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.6);
+    transform: translateY(0) translateX(3px) scale(0.96);
+    z-index: 3;
+}
+
+.ctrl-btn.right:active, .ctrl-btn.right.active {
+    background: linear-gradient(135deg, #00d2ff 0%, #007799 100%);
+    border-color: #00d2ff;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.6);
+    transform: translateY(0) translateX(-3px) scale(0.96);
+    z-index: 3;
+}
+
+.ctrl-btn:active .dpad-arrow, .ctrl-btn.active .dpad-arrow {
+    color: #ffffff;
+    filter: drop-shadow(0 0 8px #ffffff);
+}
 
 #play-btn {
     margin-top: 10px;
@@ -223,9 +288,9 @@ canvas {
         gap: 5px;
     }
     
-    .ctrl-btn {
-        width: 50px;
-        height: 50px;
+    .dpad-housing {
+        transform: scale(0.85);
+        margin: -15px auto;
     }
 }
 

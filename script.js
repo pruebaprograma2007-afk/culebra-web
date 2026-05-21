@@ -41,18 +41,32 @@ function initGame() {
 
 // Función para manejar la dirección (compartida entre teclado y móvil)
 function setDirection(newDir) {
+    let changed = false;
+    
     // Iniciar juego si no ha empezado
     if (!gameStarted) {
         gameStarted = true;
         overlay.classList.add("hidden");
         game = setInterval(draw, 120);
+        changed = true;
     }
 
-    // Bloqueo de 180 grados
-    if (newDir == "LEFT" && d != "RIGHT") d = "LEFT";
-    else if (newDir == "UP" && d != "DOWN") d = "UP";
-    else if (newDir == "RIGHT" && d != "LEFT") d = "RIGHT";
-    else if (newDir == "DOWN" && d != "UP") d = "DOWN";
+    // Bloqueo de 180 grados e impedir vibrar en el mismo sentido
+    if (newDir == "LEFT" && d != "RIGHT" && d != "LEFT") { d = "LEFT"; changed = true; }
+    else if (newDir == "UP" && d != "DOWN" && d != "UP") { d = "UP"; changed = true; }
+    else if (newDir == "RIGHT" && d != "LEFT" && d != "RIGHT") { d = "RIGHT"; changed = true; }
+    else if (newDir == "DOWN" && d != "UP" && d != "DOWN") { d = "DOWN"; changed = true; }
+
+    if (changed) {
+        triggerVibration();
+    }
+}
+
+// Vibración táctil corta
+function triggerVibration() {
+    if (navigator.vibrate) {
+        navigator.vibrate(15);
+    }
 }
 
 // Escuchador de teclado
@@ -80,16 +94,46 @@ playBtn.addEventListener("touchstart", (e) => {
     }
 });
 
-document.getElementById("ctrl-up").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("UP"); });
-document.getElementById("ctrl-left").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("LEFT"); });
-document.getElementById("ctrl-down").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("DOWN"); });
-document.getElementById("ctrl-right").addEventListener("touchstart", (e) => { e.preventDefault(); setDirection("RIGHT"); });
+// Función para vincular botones D-pad con feedback visual de click y touch snappiness
+function bindDpadButton(id, direction) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
 
-// También añadir click para pruebas en desktop con modo móvil
-document.getElementById("ctrl-up").addEventListener("click", () => setDirection("UP"));
-document.getElementById("ctrl-left").addEventListener("click", () => setDirection("LEFT"));
-document.getElementById("ctrl-down").addEventListener("click", () => setDirection("DOWN"));
-document.getElementById("ctrl-right").addEventListener("click", () => setDirection("RIGHT"));
+    btn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        btn.classList.add("active");
+        setDirection(direction);
+    }, { passive: false });
+
+    btn.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        btn.classList.remove("active");
+    });
+
+    btn.addEventListener("touchcancel", () => {
+        btn.classList.remove("active");
+    });
+
+    // Soporte para clicks en desktop o simuladores de navegador
+    btn.addEventListener("mousedown", () => {
+        btn.classList.add("active");
+        setDirection(direction);
+    });
+
+    btn.addEventListener("mouseup", () => {
+        btn.classList.remove("active");
+    });
+
+    btn.addEventListener("mouseleave", () => {
+        btn.classList.remove("active");
+    });
+}
+
+// Vincular los controles direccionales
+bindDpadButton("ctrl-up", "UP");
+bindDpadButton("ctrl-left", "LEFT");
+bindDpadButton("ctrl-down", "DOWN");
+bindDpadButton("ctrl-right", "RIGHT");
 
 // Detección de Swipes (Gesto de deslizar)
 let touchStartX = 0;
